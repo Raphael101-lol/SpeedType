@@ -1,6 +1,9 @@
 <div class="name-container">
   <h1>Enter Name</h1>
   <input id="name" type="text" placeholder="Username" maxlength="20">
+  <input id="password" type="password" placeholder="Password">
   <button (click)="continue()">Continue</button>
+  <button (click)="changePassword()">Change Password</button>
+  <button class="btn-danger" (click)="deleteUser()">Delete User</button>
   <a routerLink="/menu">Back</a>
 </div>

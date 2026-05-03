@@ -15,11 +15,13 @@ export class GameComponent {
   started = false;
   done = false;
   wpm = 0;
+  liveWpm = 0;
   accuracy = 100;
   seconds = 0;
   timer: any;
   mistakes = 0;
   totalTyped = 0;
+  leaderboard: any[] = [];
   username = localStorage.getItem('username') || 'Player';
   mode = localStorage.getItem('mode') || 'easy';
 
@@ -39,9 +41,11 @@ export class GameComponent {
       this.done = false;
       this.seconds = 0;
       this.wpm = 0;
+      this.liveWpm = 0;
       this.accuracy = 100;
       this.mistakes = 0;
       this.totalTyped = 0;
+      this.leaderboard = [];
       clearInterval(this.timer);
     });
   }
@@ -56,6 +60,10 @@ export class GameComponent {
       let start = Date.now();
       this.timer = setInterval(() => {
         this.seconds = parseFloat(((Date.now() - start) / 1000).toFixed(2));
+        let minutes = this.seconds / 60;
+        if (minutes > 0) {
+          this.liveWpm = Math.round((this.input.length / 5) / minutes);
+        }
       }, 100);
     }
 
@@ -82,7 +90,11 @@ export class GameComponent {
         accuracy: this.accuracy,
         mode: this.mode,
         time: this.seconds
-      }).subscribe();
+      }).subscribe(() => {
+        this.api.getLeaderboard().subscribe((res: any) => {
+          this.leaderboard = res[this.mode] || [];
+        });
+      });
     }
   }
 
@@ -94,10 +106,5 @@ export class GameComponent {
   goMenu() {
     clearInterval(this.timer);
     this.router.navigate(['/menu']);
-  }
-
-  goLeaderboard() {
-    clearInterval(this.timer);
-    this.router.navigate(['/leaderboard']);
   }
 }

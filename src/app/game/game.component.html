@@ -1,6 +1,7 @@
 <div class="game">
   <div class="stats">
     <span>⏱ {{ seconds }}s</span>
+    <span>⌨ {{ liveWpm }} WPM</span>
     <span>👤 {{ username }}</span>
     <span>🎮 {{ mode }}</span>
   </div>
@@ -23,13 +24,27 @@
 
   @if (done) {
     <div class="results">
-      <h2>Result:</h2>
+      <h2>Done!</h2>
       <p>⌨ WPM: {{ wpm }}</p>
       <p>🎯 Accuracy: {{ accuracy }}%</p>
       <p>⏱ Time: {{ seconds }}s</p>
+
+      <h3>{{ mode }} Leaderboard</h3>
+      @for (score of leaderboard; track $index; let i = $index) {
+        <div class="row">
+          <span>#{{ i + 1 }}</span>
+          <span>{{ score.username }}</span>
+          <span>{{ score.wpm }} WPM</span>
+          <span>{{ score.accuracy }}%</span>
+          <span>{{ score.time }}s</span>
+        </div>
+      }
+      @if (leaderboard.length === 0) {
+        <p>No scores yet</p>
+      }
+
       <button (click)="newGame()">Play Again</button>
       <button (click)="goMenu()">Menu</button>
-      <button (click)="goLeaderboard()">Leaderboard</button>
     </div>
   }
 </div>

@@ -10,7 +10,7 @@ import { Router, RouterModule } from '@angular/router';
 })
 export class ModeSelectComponent {
 
-  modes = ['easy', 'medium', 'hard', 'extreme'];
+  modes = ['Easy', 'Medium', 'Hard', 'Extreme'];
 
   constructor(private router: Router) {}
 
