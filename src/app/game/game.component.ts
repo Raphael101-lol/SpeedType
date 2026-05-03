@@ -107,4 +107,8 @@ export class GameComponent {
     clearInterval(this.timer);
     this.router.navigate(['/menu']);
   }
+   goModeSelect() {
+  clearInterval(this.timer);
+  this.router.navigate(['/mode']);
+}
 }
