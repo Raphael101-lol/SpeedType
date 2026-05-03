@@ -30,7 +30,7 @@ export class GameComponent {
   }
 
   newGame() {
-    const counts: any = { easy: 1, medium: 3, hard: 7, extreme: 11 };
+    const counts: any = { Easy: 1, Medium: 3, Hard: 7, Extreme: 11 };
     const count = counts[this.mode] || 1;
 
     this.api.getRandomText(this.mode).subscribe((res: any) => {

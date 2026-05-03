@@ -13,7 +13,7 @@ import { ApiService } from '../api.service';
 export class LeaderboardComponent {
 
   modes = ['easy', 'medium', 'hard', 'extreme'];
-  allScores: any = { easy: [], medium: [], hard: [], extreme: [] };
+  allScores: any = { Easy: [], Medium: [], Hard: [], Extreme: [] };
 
   constructor(private api: ApiService) {
     this.loadScores();
