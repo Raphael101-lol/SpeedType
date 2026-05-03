@@ -1,0 +1,28 @@
+<div class="settings-container">
+  <h1 class="title">SETTINGS</h1>
+
+  <div class="settings-card">
+    @for (color of colors; track color.label) {
+      <div class="setting-row">
+        <label>{{ color.label }}</label>
+        <input 
+          type="color" 
+          [value]="color.label === 'Primary Color' ? primary : secondary"
+          (input)="onColorChange($any($event.target).value, color.label === 'Primary Color' ? 'primary' : 'secondary')" 
+        />
+      </div>
+    }
+
+    <div class="preview">
+      <span [style.color]="primary">PRIMARY</span>
+      <span [style.color]="secondary">SECONDARY</span>
+    </div>
+
+    <div class="actions">
+      <button class="btn-primary" (click)="apply()">Apply</button>
+      <button class="btn-reset" (click)="reset()">Reset</button>
+    </div>
+  </div>
+
+  <button class="btn-back" routerLink="/menu">Back</button>
+</div>

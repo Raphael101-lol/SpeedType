@@ -1,1 +1,20 @@
-/* You can add global styles to this file, and also import other style files */
+   :root {
+      --primary: #b700ff;
+      --secondary: #00ffaa;
+      --bg: #080808;
+      --surface: #111111;
+      --text: #e8e8e8;
+      --text-muted: #444;
+    }
+    
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      background: #080808;
+      color: #e8e8e8;
+      font-family: 'Courier New', Courier, monospace;
+    }

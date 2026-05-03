@@ -1,0 +1,39 @@
+.mode-container {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: black;
+  gap: 15px;
+}
+
+h1 {
+  color: var(--primary);
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 15px;
+}
+
+button {
+  padding: 10px 20px;
+  background: black;
+  color: var(--primary);
+  border: 2px solid var(--primary);
+  cursor: pointer;
+  width: 200px;
+}
+
+button:hover {
+  background: var(--primary);
+  color: black;
+}
+
+a {
+  color: var(--primary);
+  text-decoration: none;
+  margin-top: 10px;
+}

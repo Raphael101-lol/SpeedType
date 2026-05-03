@@ -1,0 +1,12 @@
+<div class="menu-container">
+  <h1 class="title">SPEED TYPE</h1>
+  <p class="subtitle">⌨typing challenge</p>
+
+  <div class="menu-buttons">
+    @for (item of menuItems; track item.route) {
+      <button [class]="item.class" (click)="go(item.route)">
+        {{ item.label }}
+      </button>
+    }
+  </div>
+</div>

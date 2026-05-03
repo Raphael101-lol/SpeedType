@@ -1,4 +1,3 @@
-require('dotenv').config();
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
@@ -7,42 +6,69 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-mongoose.connect(process.env.MONGODB_URI);
+mongoose.connect('mongodb+srv://FinalPro:20245535@mycluster.nbc6ipy.mongodb.net/speedtype?appName=MyCluster')
+  .then(() => console.log('MongoDB connected'))
+  .catch(err => console.log(err));
 
-app.listen(3000, () => {
-    console.log('SpeedType Game is Running');
+const scoreSchema = new mongoose.Schema({
+  username: String,
+  wpm: Number,
+  accuracy: Number,
+  mode: String,
+  time: Number,
+  createdAt: { type: Date, default: Date.now }
 });
 
-const Score = mongoose.model('score', new mongoose.Schema({
-    username: String,
-    wpm: Number,
-    accuracy: Number,
-    date: String
-}));
+const Score = mongoose.model('Score', scoreSchema);
 
-app.post('/api/submit-score', async (req, res) => {
-    const score = new Score(req.body);
-    await score.save();
-    res.send(score);
-    console.log("Game Result Saved:", score);
+app.post('/api/scores', async (req, res) => {
+  try {
+    const { username, wpm, accuracy, mode, time } = req.body;
+
+    let existing = await Score.findOne({ username, mode });
+
+    if (existing) {
+      if (wpm > existing.wpm || time < existing.time) {
+        existing.wpm = wpm;
+        existing.accuracy = accuracy;
+        existing.time = time;
+        await existing.save();
+      }
+      return res.json(existing);
+    }
+
+    const score = await Score.create({ username, wpm, accuracy, mode, time });
+    res.json(score);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
 });
 
-app.get('/api/leaderboard', async (req, res) => {
-    const scores = await Score.find().sort({ wpm: -1 }).limit(10);
-    res.send(scores);
-    console.log('Leaderboard loaded');
+
+app.get('/api/scores', async (req, res) => {
+  try {
+    let result = { easy: [], medium: [], hard: [], extreme: [] };
+    let modes = ['easy', 'medium', 'hard', 'extreme'];
+
+    for (let mode of modes) {
+      result[mode] = await Score.find({ mode })
+     .sort({ wpm: -1 }) 
+     .limit(10);
+    }
+
+    res.json(result);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
 });
 
 app.delete('/api/scores/:id', async (req, res) => {
+  try {
     await Score.findByIdAndDelete(req.params.id);
-    res.status(204).send();
+    res.json({ success: true });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
 });
 
-app.put('/api/scores/:id', async (req, res) => {
-    const updateScore = await Score.findByIdAndUpdate(
-        req.params.id,
-        req.body,
-        { new: true }
-    );
-    res.send(updateScore);
-});
+app.listen(3000, () => console.log('Server running on port 3000'));

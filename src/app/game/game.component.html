@@ -1,0 +1,35 @@
+<div class="game">
+  <div class="stats">
+    <span>⏱ {{ seconds }}s</span>
+    <span>👤 {{ username }}</span>
+    <span>🎮 {{ mode }}</span>
+  </div>
+
+  <div class="text">
+    @for (char of text.split(''); track $index; let i = $index) {
+      <span [class]="getClass(i)">{{ char }}</span>
+    }
+  </div>
+
+  <input
+    type="text"
+    [value]="input"
+    (input)="onType($event)"
+    [disabled]="done"
+    autofocus
+    autocomplete="off"
+    placeholder="Start typing..."
+  />
+
+  @if (done) {
+    <div class="results">
+      <h2>Result:</h2>
+      <p>⌨ WPM: {{ wpm }}</p>
+      <p>🎯 Accuracy: {{ accuracy }}%</p>
+      <p>⏱ Time: {{ seconds }}s</p>
+      <button (click)="newGame()">Play Again</button>
+      <button (click)="goMenu()">Menu</button>
+      <button (click)="goLeaderboard()">Leaderboard</button>
+    </div>
+  }
+</div>
