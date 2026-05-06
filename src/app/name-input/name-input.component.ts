@@ -9,94 +9,91 @@ import { Router, RouterModule } from '@angular/router';
   styleUrls: ['./name-input.component.css']
 })
 export class NameInputComponent {
-
   constructor(private router: Router) {}
 
   continue() {
     const name = (document.getElementById('name') as HTMLInputElement).value;
-    const password = (document.getElementById('password') as HTMLInputElement).value;
+    const pass = (document.getElementById('password') as HTMLInputElement).value;
 
-    if (!name.trim()) {
-      alert('Please enter a username');
+    if (!name || !pass) {
+      alert('Enter username and password');
       return;
     }
 
-    if (!password.trim()) {
-      alert('Please enter a password');
+    const saved = localStorage.getItem('pwd_' + name);
+
+    if (saved && saved !== pass) {
+      alert('Wrong password');
       return;
     }
 
-    const stored = localStorage.getItem('password_' + name);
-
-    if (stored && stored !== password) {
-      alert('Wrong password for this username');
-      return;
+    if (!saved) {
+      localStorage.setItem('pwd_' + name, pass);
+      alert('New user created!');
     }
 
     localStorage.setItem('username', name);
-    localStorage.setItem('password_' + name, password);
     this.router.navigate(['/mode']);
   }
 
   changePassword() {
     const name = (document.getElementById('name') as HTMLInputElement).value;
-    const password = (document.getElementById('password') as HTMLInputElement).value;
+    const oldPass = (document.getElementById('password') as HTMLInputElement).value;
+    const saved = localStorage.getItem('pwd_' + name);
 
-    if (!name.trim() || !password.trim()) {
-      alert('Please enter your username and old password');
+    if (!saved) {
+      alert('User not found');
       return;
     }
 
-    const stored = localStorage.getItem('password_' + name);
-
-    if (!stored) {
-      alert('Username not found');
-      return;
-    }
-
-    if (stored !== password) {
+    if (saved !== oldPass) {
       alert('Wrong password');
       return;
     }
 
-    const newPassword = prompt('Enter new password');
+    const newPass = prompt('New password:');
+    if (newPass) {
+      localStorage.setItem('pwd_' + name, newPass);
+      alert('Password changed!');
+      (document.getElementById('password') as HTMLInputElement).value = '';
+    }
+  }
 
-    if (!newPassword) {
-      alert('New password cannot be empty');
+  forgotPassword() {
+    const name = (document.getElementById('name') as HTMLInputElement).value;
+    const saved = localStorage.getItem('pwd_' + name);
+
+    if (!saved) {
+      alert('User not found');
       return;
     }
 
-    localStorage.setItem('password_' + name, newPassword);
-    alert('Password changed successfully');
+    alert(`Your password is: ${saved}`);
   }
 
   deleteUser() {
     const name = (document.getElementById('name') as HTMLInputElement).value;
-    const password = (document.getElementById('password') as HTMLInputElement).value;
+    const pass = (document.getElementById('password') as HTMLInputElement).value;
+    const saved = localStorage.getItem('pwd_' + name);
 
-    if (!name.trim() || !password.trim()) {
-      alert('Please enter your username and password');
+    if (!saved) {
+      alert('User not found');
       return;
     }
 
-    const stored = localStorage.getItem('password_' + name);
-
-    if (!stored) {
-      alert('Username not found');
-      return;
-    }
-
-    if (stored !== password) {
+    if (saved !== pass) {
       alert('Wrong password');
       return;
     }
 
-    const confirm = window.confirm(`Are you sure you want to delete "${name}"?`);
-
-    if (confirm) {
-      localStorage.removeItem('password_' + name);
-      localStorage.removeItem('username');
+    if (confirm(`Delete ${name}?`)) {
+      localStorage.removeItem('pwd_' + name);
+      if (localStorage.getItem('username') === name) {
+        localStorage.removeItem('username');
+      }
       alert('User deleted');
+      (document.getElementById('name') as HTMLInputElement).value = '';
+      (document.getElementById('password') as HTMLInputElement).value = '';
     }
   }
 }

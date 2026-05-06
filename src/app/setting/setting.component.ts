@@ -1,39 +1,38 @@
 import { Component } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-settings',
   standalone: true,
-  imports: [RouterModule, FormsModule],
+  imports: [RouterModule],
   templateUrl: './setting.component.html',
   styleUrls: ['./setting.component.css']
 })
 export class SettingsComponent {
-  primary = '#172fba';
+  primary = '#BA7517';
   secondary = '#3B6D11';
 
-  colors = [
-    { label: 'Primary Color', value: this.primary },
-    { label: 'Secondary Color', value: this.secondary }
-  ];
-
   constructor() {
-    const root = document.documentElement;
-    this.primary = getComputedStyle(root).getPropertyValue('--primary').trim() || '#BA7517';
-    this.secondary = getComputedStyle(root).getPropertyValue('--secondary').trim() || '#3B6D11';
+    const savedP = localStorage.getItem('primary');
+    const savedS = localStorage.getItem('secondary');
+    if (savedP) this.primary = savedP;
+    if (savedS) this.secondary = savedS;
+    this.apply();
   }
 
-  onColorChange(value: string, type: string) {
-    if (type === 'primary') this.primary = value;
-    if (type === 'secondary') this.secondary = value;
+  changePrimary(event: any) {
+    this.primary = event.target.value;
+  }
+
+  changeSecondary(event: any) {
+    this.secondary = event.target.value;
   }
 
   apply() {
     document.documentElement.style.setProperty('--primary', this.primary);
     document.documentElement.style.setProperty('--secondary', this.secondary);
-    localStorage.setItem('theme-primary', this.primary);
-    localStorage.setItem('theme-secondary', this.secondary);
+    localStorage.setItem('primary', this.primary);
+    localStorage.setItem('secondary', this.secondary);
   }
 
   reset() {

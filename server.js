@@ -9,7 +9,7 @@ app.use(express.json());
 
 mongoose.connect(process.env.MONGODB_URI)
   .then(() => console.log('MongoDB connected'))
-  .catch(err => console.log(err));
+  .catch(err => console.log('MongoDB error:', err));
 
 const scoreSchema = new mongoose.Schema({
   username: String,
@@ -25,11 +25,11 @@ const Score = mongoose.model('Score', scoreSchema);
 app.post('/api/scores', async (req, res) => {
   try {
     const { username, wpm, accuracy, mode, time } = req.body;
-
+    
     let existing = await Score.findOne({ username, mode });
-
+    
     if (existing) {
-      if (wpm > existing.wpm || time < existing.time) {
+      if (wpm > existing.wpm) {
         existing.wpm = wpm;
         existing.accuracy = accuracy;
         existing.time = time;
@@ -37,7 +37,7 @@ app.post('/api/scores', async (req, res) => {
       }
       return res.json(existing);
     }
-
+    
     const score = await Score.create({ username, wpm, accuracy, mode, time });
     res.json(score);
   } catch (err) {
@@ -45,18 +45,15 @@ app.post('/api/scores', async (req, res) => {
   }
 });
 
-
 app.get('/api/scores', async (req, res) => {
   try {
-    let result = { easy: [], medium: [], hard: [], extreme: [] };
-    let modes = ['easy', 'medium', 'hard', 'extreme'];
-
+    const result = { Easy: [], Medium: [], Hard: [], Extreme: [] };
+    const modes = ['Easy', 'Medium', 'Hard', 'Extreme'];
+    
     for (let mode of modes) {
-      result[mode] = await Score.find({ mode })
-     .sort({ wpm: -1 }) 
-     .limit(10);
+      result[mode] = await Score.find({ mode }).sort({ wpm: -1 }).limit(10);
     }
-
+    
     res.json(result);
   } catch (err) {
     res.status(500).json({ error: err.message });
@@ -72,4 +69,5 @@ app.delete('/api/scores/:id', async (req, res) => {
   }
 });
 
-app.listen(3000, () => console.log('Server running on port 3000'));
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => console.log(`Server running on port ${PORT}`));

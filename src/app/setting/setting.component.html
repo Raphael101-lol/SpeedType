@@ -1,28 +1,22 @@
-<div class="settings-container">
-  <h1 class="title">SETTINGS</h1>
+<div class="settings">
+  <h1>Settings</h1>
 
-  <div class="settings-card">
-    @for (color of colors; track color.label) {
-      <div class="setting-row">
-        <label>{{ color.label }}</label>
-        <input 
-          type="color" 
-          [value]="color.label === 'Primary Color' ? primary : secondary"
-          (input)="onColorChange($any($event.target).value, color.label === 'Primary Color' ? 'primary' : 'secondary')" 
-        />
-      </div>
-    }
-
-    <div class="preview">
-      <span [style.color]="primary">PRIMARY</span>
-      <span [style.color]="secondary">SECONDARY</span>
-    </div>
-
-    <div class="actions">
-      <button class="btn-primary" (click)="apply()">Apply</button>
-      <button class="btn-reset" (click)="reset()">Reset</button>
-    </div>
+  <div class="option">
+    <label>Primary Color</label>
+    <input type="color" [value]="primary" (input)="changePrimary($event)">
   </div>
 
-  <button class="btn-back" routerLink="/menu">Back</button>
+  <div class="option">
+    <label>Secondary Color</label>
+    <input type="color" [value]="secondary" (input)="changeSecondary($event)">
+  </div>
+
+  <div class="preview">
+    <button class="preview-primary" [style.background]="primary">Primary</button>
+    <button class="preview-secondary" [style.background]="secondary">Secondary</button>
+  </div>
+
+  <button class="apply-btn" (click)="apply()">Apply</button>
+  <button class="reset-btn" (click)="reset()">Reset</button>
+  <button class="back-btn" routerLink="/menu">Back</button>
 </div>

@@ -11,8 +11,7 @@ import { ApiService } from '../api.service';
   styleUrls: ['./leaderboard.component.css']
 })
 export class LeaderboardComponent {
-
-  modes = ['easy', 'medium', 'hard', 'extreme'];
+  modes = ['Easy', 'Medium', 'Hard', 'Extreme'];
   allScores: any = { Easy: [], Medium: [], Hard: [], Extreme: [] };
 
   constructor(private api: ApiService) {
@@ -24,9 +23,12 @@ export class LeaderboardComponent {
       this.allScores = res;
     });
   }
+
   deleteScore(id: string) {
-  this.api.deleteScore(id).subscribe(() => {
-    this.loadScores();
-  });
-}
+    if (confirm('Delete this score?')) {
+      this.api.deleteScore(id).subscribe(() => {
+        this.loadScores();
+      });
+    }
+  }
 }

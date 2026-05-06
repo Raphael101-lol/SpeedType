@@ -1,9 +1,16 @@
 <div class="name-container">
-  <h1>Enter Name</h1>
-  <input id="name" type="text" placeholder="Username" maxlength="20">
+  <h1>Speed Type</h1>
+  
+  <input id="name" type="text" placeholder="Username">
   <input id="password" type="password" placeholder="Password">
-  <button (click)="continue()">Continue</button>
-  <button (click)="changePassword()">Change Password</button>
-  <button class="btn-danger" (click)="deleteUser()">Delete User</button>
+
+  <button (click)="continue()">Login / Sign Up</button>
+  
+  <div class="buttons">
+    <button (click)="changePassword()">Change Password</button>
+    <button (click)="forgotPassword()">Forgot</button>
+    <button (click)="deleteUser()">Delete</button>
+  </div>
+
   <a routerLink="/menu">Back</a>
 </div>

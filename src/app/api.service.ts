@@ -5,23 +5,24 @@ import { HttpClient } from '@angular/common/http';
   providedIn: 'root'
 })
 export class ApiService {
+  private apiUrl = 'http://localhost:3000/api';
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
-  getRandomText(mode: string = 'easy') {
+  getRandomText(mode: string) {
     const skip = Math.floor(Math.random() * 80);
     return this.http.get<any>(`https://dummyjson.com/quotes?limit=20&skip=${skip}`);
   }
 
   saveScore(data: any) {
-    return this.http.post('http://localhost:3000/api/scores', data);
+    return this.http.post(`${this.apiUrl}/scores`, data);
   }
 
   getLeaderboard() {
-    return this.http.get<any>('http://localhost:3000/api/scores');
+    return this.http.get<any>(`${this.apiUrl}/scores`);
   }
 
   deleteScore(id: string) {
-    return this.http.delete(`http://localhost:3000/api/scores/${id}`);
+    return this.http.delete(`${this.apiUrl}/scores/${id}`);
   }
 }

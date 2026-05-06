@@ -1,5 +1,5 @@
 <div class="leaderboard">
-  <h1>Leaderboard</h1>
+  <h1 class="title">Leaderboard</h1>
 
   @for (mode of modes; track mode) {
     <div class="section">
@@ -7,20 +7,19 @@
 
       @for (score of allScores[mode]; track $index; let i = $index) {
         <div class="row">
-          <span>#{{ i + 1 }}</span>
-          <span>{{ score.username }}</span>
-          <span>{{ score.wpm }} WPM</span>
-          <span>{{ score.accuracy }}%</span>
-          <span>{{ score.time }}s</span>
-          <button (click)="deleteScore(score._id)">✕</button>
+          <span class="rank">#{{ i + 1 }}</span>
+          <span class="player-name">{{ score.username }}</span>
+          <span class="player-wpm">{{ score.wpm }} WPM</span>
+          <span class="player-accuracy">{{ score.accuracy }}%</span>
+          <span class="player-time">{{ score.time }}s</span>
+          <button class="delete-btn" (click)="deleteScore(score._id)">✕</button>
         </div>
       }
-
       @if (allScores[mode].length === 0) {
         <p>No scores</p>
       }
     </div>
   }
 
-  <button routerLink="/menu">Back</button>
+  <button class="back-btn" routerLink="/menu">Back</button>
 </div>

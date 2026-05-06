@@ -1,11 +1,11 @@
 <div class="mode-container">
   <h1>Select Mode</h1>
 
-  <div class="grid">
+  <div class="mode-grid">
     @for (mode of modes; track mode) {
-      <button (click)="select(mode)">{{ mode }}</button>
+      <button class="mode-btn" (click)="select(mode)">{{ mode }}</button>
     }
   </div>
 
-  <a routerLink="/name">Back</a>
+  <a class="back-link" routerLink="/name">Back</a>
 </div>

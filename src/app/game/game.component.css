@@ -1,49 +1,148 @@
 .game {
-  height: 100vh;
+  max-width: 900px;
+  margin: 0 auto;
+  background: rgba(255,255,255,0.1);
+  border-radius: 20px;
+  padding: 30px;
+}
+
+.stats {
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  background: black;
-  gap: 20px;
-  color: white;
+  justify-content: space-between;
+  background: rgba(0,0,0,0.3);
+  padding: 15px 20px;
+  border-radius: 10px;
+  margin-bottom: 30px;
+  font-size: 18px;
+  font-weight: bold;
 }
 
-.text {
-  max-width: 600px;
-  padding: 20px;
-  border: 2px solid var(--primary);
-  font-size: 1.5rem;
-  letter-spacing: 2px;
+.timer {
+  color: var(--primary);
 }
 
-.correct {
+.wpm {
+  color: #4CAF50;
+}
+
+.mode {
   color: var(--secondary);
 }
 
+.text {
+  background: rgba(0,0,0,0.3);
+  padding: 30px;
+  border-radius: 15px;
+  margin-bottom: 30px;
+  font-size: 28px;
+  line-height: 1.5;
+  word-break: break-word;
+}
+
+.correct {
+  color: #4CAF50;
+}
+
 .wrong {
-  color: red;
-  background: rgba(255, 0, 0, 0.3);
+  color: #f44336;
+  background: rgba(244,67,54,0.2);
+  border-radius: 3px;
 }
 
-h1, h2 {
-  color: var(--primary);
-}
-
-p {
-  color: var(--primary);
-}
-
-button {
-  padding: 10px 20px;
-  background: black;
-  color: var(--primary);
+.typing-input {
+  width: 100%;
+  padding: 18px;
+  font-size: 18px;
   border: 2px solid var(--primary);
+  border-radius: 10px;
+  background: white;
+  margin-bottom: 30px;
+}
+
+.typing-input:focus {
+  outline: none;
+  border-color: var(--secondary);
+}
+
+.results {
+  text-align: center;
+  background: rgba(0,0,0,0.3);
+  padding: 30px;
+  border-radius: 15px;
+}
+
+.results h2 {
+  color: var(--primary);
+  font-size: 32px;
+  margin-bottom: 20px;
+}
+
+.results p {
+  font-size: 20px;
+  margin: 10px 0;
+}
+
+.results h3 {
+  color: var(--secondary);
+  margin: 30px 0 15px;
+  font-size: 24px;
+}
+
+.row {
+  display: flex;
+  justify-content: space-between;
+  background: rgba(255,255,255,0.1);
+  padding: 12px;
+  margin: 8px 0;
+  border-radius: 8px;
+}
+
+.rank {
+  color: var(--primary);
+  font-weight: bold;
+}
+
+.score-wpm {
+  color: #4CAF50;
+  font-weight: bold;
+}
+
+.btn-mode {
+  background: var(--secondary);
+  margin: 10px;
+  padding: 12px 24px;
+  font-size: 16px;
+  font-weight: bold;
+  border: none;
+  border-radius: 8px;
   cursor: pointer;
-  margin: 5px;
+  color: white;
+}
+
+.btn-again {
+  background: var(--primary);
+  margin: 10px;
+  padding: 12px 24px;
+  font-size: 16px;
+  font-weight: bold;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  color: white;
+}
+
+.btn-menu {
+  background: #555;
+  margin: 10px;
+  padding: 12px 24px;
+  font-size: 16px;
+  font-weight: bold;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  color: white;
 }
 
 button:hover {
-  background: var(--primary);
-  color: black;
+  transform: translateY(-2px);
 }
