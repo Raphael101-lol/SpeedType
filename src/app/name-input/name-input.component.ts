@@ -59,18 +59,6 @@ export class NameInputComponent {
     }
   }
 
-  forgotPassword() {
-    const name = (document.getElementById('name') as HTMLInputElement).value;
-    const saved = localStorage.getItem('pwd_' + name);
-
-    if (!saved) {
-      alert('User not found');
-      return;
-    }
-
-    alert(`Your password is: ${saved}`);
-  }
-
   deleteUser() {
     const name = (document.getElementById('name') as HTMLInputElement).value;
     const pass = (document.getElementById('password') as HTMLInputElement).value;
