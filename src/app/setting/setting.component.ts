@@ -9,8 +9,8 @@ import { RouterModule } from '@angular/router';
   styleUrls: ['./setting.component.css']
 })
 export class SettingsComponent {
-  primary = '#BA7517';
-  secondary = '#3B6D11';
+  primary = '#ff0000';
+  secondary = '#111a6d';
 
   constructor() {
     const savedP = localStorage.getItem('primary');
@@ -36,8 +36,8 @@ export class SettingsComponent {
   }
 
   reset() {
-    this.primary = '#BA7517';
-    this.secondary = '#3B6D11';
+    this.primary = '#0400ff';
+    this.secondary = '#ff0000';
     this.apply();
   }
 }
